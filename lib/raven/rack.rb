@@ -54,7 +54,7 @@ module Raven
       # callers
       env[:requested_at] = Time.now
       Raven.rack_context(env)
-
+  
       begin
         response = @app.call(env)
       rescue Error
