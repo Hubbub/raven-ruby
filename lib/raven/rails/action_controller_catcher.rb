@@ -11,7 +11,13 @@ module Raven
       private
 
       def rescue_action_in_public_with_raven(exception)
-        Raven.capture_exception(exception) do |evt|
+        options = {
+          :extra => {
+            "Session" => session
+          }
+        }
+
+        Raven.capture_exception(exception, options) do |evt|
           evt.interface :http do |int|
             int.from_rack(request.env)
           end
