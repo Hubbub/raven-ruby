@@ -30,6 +30,8 @@ module Raven
       end
 
       def sanitize(key, value)
+        key = key.to_s
+
         if !value.is_a?(String) || value.empty?
           value
         elsif VALUES_RE.match(clean_invalid_utf8_bytes(value)) || FIELDS_RE.match(key)
