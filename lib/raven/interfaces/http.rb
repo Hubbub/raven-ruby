@@ -38,6 +38,10 @@ module Raven
         end
       end
 
+      if env.key?("rack.session")
+        self.env["Session"] = env["rack.session"]
+      end
+
       self.data =
         if req.form_data?
           req.POST
