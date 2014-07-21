@@ -16,6 +16,8 @@ module Raven
             int.from_rack(request.env)
           end
         end
+        
+        rescue_action_in_public_without_raven(exception)
       end
     end
   end
