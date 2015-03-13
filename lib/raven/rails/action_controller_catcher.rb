@@ -11,6 +11,10 @@ module Raven
       private
 
       def rescue_action_in_public_with_raven(exception)
+        if exception.class.to_s == "ActiveRecord::RecordInvalid"
+          request.env["Validation Error"] = exception.record.errors.full_messages
+        end
+
         Raven.capture_exception(exception) do |evt|
           evt.interface :http do |int|
             int.from_rack(request.env)
