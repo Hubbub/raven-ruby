@@ -34,7 +34,9 @@ module Raven
 
         if !value.is_a?(String) || value.empty?
           value
-        elsif VALUES_RE.match(clean_invalid_utf8_bytes(value)) || FIELDS_RE.match(key)
+        elsif VALUES_RE.match(clean_invalid_utf8_bytes(value))
+          clean_invalid_utf8_bytes(value).gsub(VALUES_RE, MASK)
+        elsif FIELDS_RE.match(key)
           MASK
         else
           clean_invalid_utf8_bytes(value)
